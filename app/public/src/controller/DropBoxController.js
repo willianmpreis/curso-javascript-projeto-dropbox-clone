@@ -33,10 +33,30 @@ class DropBoxController
         });
 
         this.inputFilesEl.addEventListener('change', event => {
-            this.uploadTask(event.target.files);
-            this.modalShow();
-            this.inputFilesEl.value = '';
+            this.btnSendFileEl.disabled = true;
+            this.uploadTask(event.target.files).then(responses => {
+                responses.forEach(resp => {
+                    this.getFirebaseRef().push().set(resp.files['input-file']);
+                })
+                this.uploadComplete();
+            }).catch(err => {
+                this.uploadComplete();
+                console.log(err);
+            });
+            this.modalShow();            
         });
+    }
+
+    uploadComplete()
+    {
+        this.modalShow(false);
+        this.inputFilesEl.value = '';
+        this.btnSendFileEl.disabled = false;
+    }
+
+    getFirebaseRef()
+    {
+        return firebase.database().ref('files');
     }
 
     modalShow(show = true)
@@ -58,7 +78,6 @@ class DropBoxController
                 ajax.open('POST', '/upload');
 
                 ajax.onload = event => {
-                    this.modalShow(false);
                     try {
                         resolve(JSON.parse(ajax.responseText))
                     } catch (e) {
@@ -67,7 +86,6 @@ class DropBoxController
                 }
 
                 ajax.onerror = event => {
-                    this.modalShow(false);
                     reject(event);
                 }
 
@@ -192,6 +210,7 @@ class DropBoxController
                 case 'video/avi':
                 case 'video/wmv':
                 case 'video/mkv':
+                case 'video/webm':
                 return `
                 <svg width="160" height="160" viewBox="0 0 160 160" class="mc-icon-template-content tile__preview tile__preview--icon">
                     <title>content-video-large</title>
