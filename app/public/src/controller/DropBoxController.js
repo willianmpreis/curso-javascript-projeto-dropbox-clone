@@ -29,14 +29,14 @@ class DropBoxController
             return;
         }
         const firebaseConfig = {
-            apiKey: "AIzaSyCDCMgrmuMONEgxXUuha8Jhwle1-qrYSvY",
-            authDomain: "dropbox-clone-hcode.firebaseapp.com",
-            databaseURL: "https://dropbox-clone-hcode.firebaseio.com",
-            projectId: "dropbox-clone-hcode",
-            storageBucket: "dropbox-clone-hcode.appspot.com",
-            messagingSenderId: "994144318017",
-            appId: "1:994144318017:web:6f09e5b313dd6f79bdccc0",
-            measurementId: "G-VEVLZKQ041"
+            apiKey: "",
+            authDomain: "",
+            databaseURL: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: "",
+            measurementId: ""
           };
           
           firebase.initializeApp(firebaseConfig);
